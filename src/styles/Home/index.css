@@ -1,0 +1,17 @@
+@reference "tailwindcss";
+
+.card {
+    @apply bg-white p-4 mt-4 w-full;
+}
+
+.search-card {
+    /* margin-bottom: 1rem; */
+    @apply mb-4;
+}
+
+/* 覆盖NoticeBar左侧图标的最小宽度限制 */
+.rv-notice-bar__left-icon {
+    min-width: auto;  /* 移除最小宽度限制 */
+    font-size: 1.2rem ;  /* 调整图标大小 */
+    margin-right: 0.2rem;  /* 调整图标与文本之间的间距 */
+}

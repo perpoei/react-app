@@ -261,6 +261,7 @@ html {
     width: 100vw;
     overflow: hidden;
     position: relative;
+    background-color: #f9f9f9;
 }
 
 /** 应用内容区域 */
