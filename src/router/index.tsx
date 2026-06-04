@@ -1,20 +1,26 @@
 import { lazy } from 'react';
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 import ChatRouter from './Chat';
 import HomeRouter from './Home';
 import ProfileRouter from './Profile';
 
-const Layout = lazy(() => import("../pages/Layout/index.tsx"))
+const TabBarLayout = lazy(() => import("@/pages/TabBarLayout/index.tsx"))
 
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <Layout />,
-
+        element: <TabBarLayout />,
+        children: [
+            ...ChatRouter,
+            ...HomeRouter,
+            ...ProfileRouter,
+            /** 默认重定向到首页 */
+            {
+                index: true,
+                element: <Navigate to="/home" replace />
+            }
+        ]
     },
-    ...ChatRouter,
-    ...HomeRouter,
-    ...ProfileRouter,
 ]);
 
 export default router;

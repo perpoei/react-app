@@ -1,9 +1,7 @@
-import { Button, Cell, CellGroup } from 'react-vant';
-
-export default function Home() {
+export default function Chat() {
     return (
         <div style={{ padding: '20px' }}>
-            jia
+            <h1>首页</h1>
         </div>
     )
 }

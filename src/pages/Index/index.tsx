@@ -1,4 +1,3 @@
-import { Tabbar } from 'react-vant';
 export default function Index() {
   return (
     <div>

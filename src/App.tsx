@@ -1,17 +1,17 @@
 import { Suspense } from 'react'
 import { RouterProvider } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import router from './router'
-import store from './store/index.ts'
-import './App.css'
+import router from '@/router'
+import store from '@/store/index.ts'
+import Loading from '@/components/common/loading/index.tsx'
 
 function App() {
   return (
-    <Suspense fallback={<div>页面加载中...</div>}>
+    // <Suspense fallback={<Loading />}>
       <Provider store={store}>
         <RouterProvider router={router} />
       </Provider>
-    </Suspense>
+    // </Suspense>
   )
 }
 
