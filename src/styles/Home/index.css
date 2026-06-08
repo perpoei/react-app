@@ -1,17 +1,55 @@
 @reference "tailwindcss";
 
-.card {
-    @apply bg-white p-4 mt-4 w-full;
-}
+.container {
+    margin-bottom: 2rem;
 
-.search-card {
-    /* margin-bottom: 1rem; */
-    @apply mb-4;
-}
+    .content {
+        @apply pl-4 pr-4;
 
-/* 覆盖NoticeBar左侧图标的最小宽度限制 */
-.rv-notice-bar__left-icon {
-    min-width: auto;  /* 移除最小宽度限制 */
-    font-size: 1.2rem ;  /* 调整图标大小 */
-    margin-right: 0.2rem;  /* 调整图标与文本之间的间距 */
+        .notice-bar {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .card {
+            @apply bg-white mt-4 p-4 rounded-2xl;
+
+            .form-item {
+                @apply mt-4
+            }
+
+            .grid {
+                @apply mt-4;
+
+                .city-tag-common {
+                    line-height: .5rem;
+                    border-radius: 1rem;
+                    font-size: .8rem;
+                    padding: .5rem;
+                    transition: all .3s;
+                }
+
+                .city-tag {
+                    background-color: #f7f8fa;
+                    color: #666;
+                }
+
+                .city-tag-active {
+                    background-color: #3f45ff;
+                    color: #fff
+                }
+            }
+
+        }
+
+        /* 覆盖NoticeBar左侧图标的最小宽度限制 */
+        .rv-notice-bar__left-icon {
+            min-width: auto;
+            /* 移除最小宽度限制 */
+            font-size: 1.2rem;
+            /* 调整图标大小 */
+            margin-right: 0.2rem;
+            /* 调整图标与文本之间的间距 */
+        }
+    }
 }

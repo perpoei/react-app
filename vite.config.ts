@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import pxtorem from 'postcss-pxtorem'
 import path from 'path'
 import tailwindcss from '@tailwindcss/vite'
 
@@ -14,7 +15,14 @@ export default defineConfig({
   build: {
     outDir: 'build',
   },
-  plugins: [react(), tailwindcss()],
+  plugins: [react(), tailwindcss(),
+  //    () => pxtorem({
+  //   rootValue: 37.5,
+  //   propList: ['*'],
+  //   selectorBlackList: ['tab-layout'], // tab不转rem
+  //   minPixelValue: 1
+  // })
+],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src')

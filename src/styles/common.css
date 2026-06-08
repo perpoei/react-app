@@ -1,3 +1,8 @@
-.page-container {
-    margin: 1rem;
+.app-container {
+    .app-content {
+        flex: 1;
+        background-color: #edf2fa;
+        height: calc(100dvh - var(--rv-tabbar-height, 50px));  /** 100dvh = 动态可视视口高度，自动排除浏览器 / 系统底部栏 */
+        overflow: auto;
+    }
 }
