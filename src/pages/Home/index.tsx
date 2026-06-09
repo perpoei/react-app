@@ -4,8 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react'
 import classNames from 'classnames';
 import { TabPath } from '@/enum/tabs';
-import { cityColumns } from '@/utils/cityList'
-import type { CityOption } from '@/types/area';
 import '@/styles/Home/index.css';
 
 export default function Chat() {
@@ -14,7 +12,7 @@ export default function Chat() {
 
     const [showPicker, setShowPicker] = useState(false);
     const [isSubmit, setIsSubmit] = useState(false);
-    const [state, updateState] = hooks.useSetState({
+    const [, updateState] = hooks.useSetState({
         money: '0',
         day: '0'
     })

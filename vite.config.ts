@@ -1,6 +1,5 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import pxtorem from 'postcss-pxtorem'
 import path from 'path'
 import tailwindcss from '@tailwindcss/vite'
 
@@ -14,15 +13,25 @@ export default defineConfig({
   },
   build: {
     outDir: 'build',
+    // 启用 CSS 代码分割
+    cssCodeSplit: true,
+    // 启用源码映射（生产环境关闭）
+    sourcemap: false,
+    // 压缩选项
+    minify: 'esbuild',
+    // Rollup 选项优化
+    rollupOptions: {
+      output: {
+        // 入口文件命名
+        entryFileNames: 'assets/js/[name]-[hash].js',
+        // 代码分割文件命名
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        // 资源文件命名
+        assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
+      },
+    },
   },
-  plugins: [react(), tailwindcss(),
-  //    () => pxtorem({
-  //   rootValue: 37.5,
-  //   propList: ['*'],
-  //   selectorBlackList: ['tab-layout'], // tab不转rem
-  //   minPixelValue: 1
-  // })
-],
+  plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src')

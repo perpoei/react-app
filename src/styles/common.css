@@ -1,8 +1,40 @@
 .app-container {
-    .app-content {
-        flex: 1;
-        background-color: #edf2fa;
-        height: calc(100dvh - var(--rv-tabbar-height, 50px));  /** 100dvh = 动态可视视口高度，自动排除浏览器 / 系统底部栏 */
-        overflow: auto;
-    }
+    height: 100dvh;
+    overflow: hidden;
+    /* 不再用 flex 整体排，内容区自己滚，tab fixed */
+}
+
+.app-content {
+    height: 100dvh;
+    box-sizing: border-box;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    /* 只给内容区 */
+    /* 给 tabbar 留出底部空间，防止被挡住 */
+    padding-bottom: calc(50px + env(safe-area-inset-bottom, 0px));
+
+    background-color: #edf2fa;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.app-content::-webkit-scrollbar {
+    display: none;
+}
+
+.tabbar-container {
+    position: fixed;
+    /* 关键：脱离文档流，钉在视口 */
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    z-index: 100;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background-color: #fff;
+    box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.05);
+
+    /* 强制独立合成层，减少 iOS 抖动 */
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
 }

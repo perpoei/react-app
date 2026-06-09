@@ -1,8 +1,7 @@
 @reference "tailwindcss";
 
 .container {
-    margin-bottom: 2rem;
-
+    
     .content {
         @apply pl-4 pr-4;
 
@@ -40,6 +39,10 @@
                 }
             }
 
+        }
+
+        .card:last-child {
+            margin-bottom: 1rem;
         }
 
         /* 覆盖NoticeBar左侧图标的最小宽度限制 */

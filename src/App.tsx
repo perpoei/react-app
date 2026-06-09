@@ -7,11 +7,11 @@ import Loading from '@/components/common/loading/index.tsx'
 
 function App() {
   return (
-    // <Suspense fallback={<Loading />}>
+    <Suspense fallback={<Loading />}>
       <Provider store={store}>
         <RouterProvider router={router} />
       </Provider>
-    // </Suspense>
+    </Suspense>
   )
 }
 

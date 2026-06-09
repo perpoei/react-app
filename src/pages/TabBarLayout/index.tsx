@@ -42,11 +42,13 @@ export default function Layout() {
                 <Outlet />
             </div>
             {/* TabBar固定在底部 */}
-            <Tabbar value={activeTab} onChange={onChange}>
-                {tabs.map((tab: TabConfig) => (
-                    <TabbarItem key={tab.name} icon={tab.icon} name={tab.name}>{tab.title}</TabbarItem>
-                ))}
-            </Tabbar>
+            <div className="tabbar-container">
+                <Tabbar value={activeTab} onChange={onChange}>
+                    {tabs.map((tab: TabConfig) => (
+                        <TabbarItem key={tab.name} icon={tab.icon} name={tab.name}>{tab.title}</TabbarItem>
+                    ))}
+                </Tabbar>
+            </div>
         </div>
     );
 }
