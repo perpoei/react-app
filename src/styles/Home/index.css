@@ -1,8 +1,9 @@
-@reference "tailwindcss";
+@import "tailwindcss";
 
-.container {
-    
-    .content {
+.page-container {
+    @apply w-full;
+
+    .page-content {
         @apply pl-4 pr-4;
 
         .notice-bar {
@@ -26,6 +27,7 @@
                     font-size: .8rem;
                     padding: .5rem;
                     transition: all .3s;
+                    @apply whitespace-nowrap
                 }
 
                 .city-tag {

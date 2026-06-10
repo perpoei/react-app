@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+.page-container {
+
+    .page-content {
+
+        @apply pl-4 pr-4;
+
+        .card {
+            @apply w-full mt-4 p-4 bg-white;
+            border-radius: .5rem;
+
+            .title {
+                @apply mb-3
+            }
+
+            .text {
+                line-height: 1.5rem;
+                font-size: .8rem;
+                color: #A4A4A4;
+            }
+        }
+
+        .header {
+            @apply flex;
+            justify-content: space-between;
+
+            .adress-day {
+                font-weight: 700;
+            }
+
+            .budget {
+                color: #CA4C47;
+            }
+        }
+
+        .schedule {
+            @apply w-full mt-4 bg-white;
+            border-radius: .5rem;
+
+            .schedule-content {
+                @apply mb-4;
+
+                .day-time {
+                    @apply mt-3 mb-3;
+                }
+
+                .scenic-spot {
+                    font-weight: 600;
+                    font-size: 1.2rem;
+                    color: #000;
+                }
+
+                .scenic-spot-detail {
+                    /* @apply mt-3; */
+
+                    .detail-item {
+                        @apply mt-3;
+                        display: flex;
+                        align-items: center;
+                    }
+                }
+
+            }
+        }
+
+        .budget-detail {
+
+            .budget-item {
+                display: flex;
+                justify-content: space-between;
+                padding: 1rem;
+
+                .thing {}
+
+                .cost {
+                    color: #A4A4A4;
+                }
+            }
+        }
+
+        .ask-btn {
+            @apply mt-5 mb-5;
+        }
+    }
+
+}
+
+.icon {
+    margin-right: .5rem;
+}

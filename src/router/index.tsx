@@ -8,6 +8,7 @@ const TabBarLayout = lazy(() => import("@/pages/TabBarLayout/index.tsx"))
 import ChatRouter from './Chat';
 import HomeRouter from './Home';
 import ProfileRouter from './Profile';
+import DetailRouter from './Detail';
 
 // 辅助函数：将路由配置转换为实际的路由元素
 function createLazyRoute(routeConfig: any) {
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
             ...ChatRouter.map(createLazyRoute),
             ...HomeRouter.map(createLazyRoute),
             ...ProfileRouter.map(createLazyRoute),
+            ...DetailRouter.map(createLazyRoute),
             /** 默认重定向到首页 */
             {
                 index: true,

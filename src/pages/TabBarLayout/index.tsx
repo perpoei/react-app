@@ -1,13 +1,19 @@
 import { useMemo } from 'react';
 import { useNavigate, Outlet, useLocation } from 'react-router-dom';
 import { Tabbar, TabbarItem } from 'react-vant';
+import { useSelector } from 'react-redux';
 import { HomeO, UserO, ChatO } from '@react-vant/icons';
 import type { TabConfig, TabChangeHandler } from '@/types/tab';
 import { TabName, TabPath } from '@/enum/tabs';
+import type { RootState } from '@/store/index'
+import classNames from 'classnames';
 
 export default function Layout() {
     const navigate = useNavigate();
     const location = useLocation();
+
+    /** 读取store的值 */
+    const isShow = useSelector((state: RootState) => state.tabs.isShow)
 
     /** 根据当前路径确定激活的Tab（使用 useMemo 缓存计算结果） */
     const activeTab: TabName = useMemo((): TabName => {
@@ -38,17 +44,24 @@ export default function Layout() {
     return (
         <div className='app-container'>
             {/** 内容区域 */}
-            <div className="app-content">
+            <div className={classNames('app-content', {
+                'app-content-padding': isShow
+            })}>
                 <Outlet />
+                {/* TabBar固定在底部 */}
             </div>
-            {/* TabBar固定在底部 */}
-            <div className="tabbar-container">
-                <Tabbar value={activeTab} onChange={onChange}>
-                    {tabs.map((tab: TabConfig) => (
-                        <TabbarItem key={tab.name} icon={tab.icon} name={tab.name}>{tab.title}</TabbarItem>
-                    ))}
-                </Tabbar>
-            </div>
+            {
+                isShow && <div className={classNames('tabbar-container animate__animated', {
+                    'animate__fadeOutDown': !isShow,
+                    'animate__fadeInUp': isShow
+                })}>
+                    <Tabbar value={activeTab} onChange={onChange}>
+                        {tabs.map((tab: TabConfig) => (
+                            <TabbarItem key={tab.name} icon={tab.icon} name={tab.name}>{tab.title}</TabbarItem>
+                        ))}
+                    </Tabbar>
+                </div>
+            }
         </div>
     );
 }
