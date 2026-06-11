@@ -3,8 +3,16 @@
 .page-container {
 
     .page-content {
-
         @apply pl-4 pr-4;
+
+        .loading-container {
+            background-color: #fff;
+            .loading {
+                position: absolute;
+                top: 50%;
+                left: 36%;
+            }
+        }
 
         .card {
             @apply w-full mt-4 p-4 bg-white;

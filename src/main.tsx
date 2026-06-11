@@ -10,7 +10,7 @@ import { initPerformanceMonitoring } from '@/utils/performance'
 initPerformanceMonitoring()
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+  // <StrictMode>
     <App />
-  </StrictMode>,
+  // </StrictMode>,
 )
