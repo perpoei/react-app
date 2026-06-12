@@ -1,7 +1,7 @@
 import { NoticeBar, NavBar, Form, Button, Picker, Input, hooks, Grid, Sticky } from 'react-vant';
 import { ChatO, InfoO, UserO } from '@react-vant/icons'
 import { useNavigate } from 'react-router-dom';
-import { useMemo, useState, useEffect } from 'react'
+import { useMemo, useState } from 'react'
 import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
 import { showTab } from '@/store/modules/tabsStore'

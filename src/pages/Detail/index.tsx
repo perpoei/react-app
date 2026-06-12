@@ -1,5 +1,5 @@
 import { Tag, NavBar, Collapse, Sticky, Button, Loading, Empty } from 'react-vant';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { ClockO, Logistics } from '@react-vant/icons';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { BudgetList, TagColor, timeSlot } from '@/enum/detail'
@@ -74,7 +74,7 @@ export default function Detail() {
 
     const DailyItineraryCollapse = () => <Collapse initExpanded={['1']}>
         {
-            planData?.dailyItinerary.map((v, i) =>
+            planData?.dailyItinerary.map((v) =>
                 <Collapse.Item title={`第${v.day}天`} name={v.day} key={v.day} >
                     {
                         timeSlot.map(_ =>
