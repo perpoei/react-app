@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 import { useNavigate, Outlet, useLocation } from 'react-router-dom';
 import { Tabbar, TabbarItem } from 'react-vant';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { HomeO, UserO, ChatO } from '@react-vant/icons';
 import type { TabConfig, TabChangeHandler } from '@/types/tab';
-import { TabName, TabPath } from '@/enum/tabs';
-import type { RootState } from '@/store/index'
+import { TabName, TabPath, NeedTabList } from '@/enum/tabs';
+// import type { RootState } from '@/store/index'
 import classNames from 'classnames';
 
 export default function Layout() {
@@ -13,7 +13,8 @@ export default function Layout() {
     const location = useLocation();
 
     /** 读取store的值 */
-    const isShow = useSelector((state: RootState) => state.tabs.isShow)
+    // const isShow = useSelector((state: RootState) => state.tabs.isShow)
+    const isShow = NeedTabList.includes(location.pathname as TabPath);
 
     /** 根据当前路径确定激活的Tab（使用 useMemo 缓存计算结果） */
     const activeTab: TabName = useMemo((): TabName => {

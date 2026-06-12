@@ -11,3 +11,9 @@ export enum TabPath {
     我的 = '/profile',
     详情 = '/detail'
 }
+
+export const NeedTabList = [
+    TabPath.首页,
+    TabPath.对话,
+    TabPath.我的
+]

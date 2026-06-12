@@ -69,10 +69,6 @@ export default function Chat() {
         dispatch(showTab({isShow: false}))
     }
 
-    useEffect(() => {
-        dispatch(showTab({isShow: true}))
-    }, [])
-
     const Footer = () => (
         <div style={{ margin: '16px 16px 0' }}>
             <Button
@@ -176,7 +172,7 @@ export default function Chat() {
                     </Grid>
                 </div>
                 <div className="card">
-                    <h3>热门目的地</h3>
+                    <h3>可能想去</h3>
                     <Grid className='grid' gutter={10}>
                         {
                             hotCity.map((v, i) =>

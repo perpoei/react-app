@@ -1,18 +1,25 @@
 import { travelPlan } from "@/api/detail"
-import type { PlanDataRequest } from "@/types/detail"
+import type { PlanDataRequest, TravelRecommendResponse } from "@/types/detail"
 import { useState } from "react"
 
 
 export const useTravel = () => {
-    const [planData, setPlanData] = useState()
+    const [ loading, setLoading ] = useState<boolean>(false);
+    const [planData, setPlanData] = useState<TravelRecommendResponse>()
+    const [errMsg, setErrMsg] = useState<string>("")
 
      /** 获取行程规划 */
     const getTravelPlan = async (data: PlanDataRequest) => {
+       setLoading(true)
        const res = await travelPlan(data)
-       console.log('res---', res)
+       res.data.success ? setPlanData(res.data) : setErrMsg(res.data.error)
+       setLoading(false)
     }
 
     return {
+        loading,
+        errMsg,
+        setLoading,
         planData,
         setPlanData,
         getTravelPlan

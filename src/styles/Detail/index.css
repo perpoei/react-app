@@ -7,10 +7,11 @@
 
         .loading-container {
             background-color: #fff;
+
             .loading {
                 position: absolute;
-                top: 50%;
-                left: 36%;
+                top: 50% ;
+                left: calc(50% - 62px);
             }
         }
 
@@ -42,11 +43,11 @@
             }
         }
 
-        .schedule {
+        .dailyItinerary {
             @apply w-full mt-4 bg-white;
             border-radius: .5rem;
 
-            .schedule-content {
+            .dailyItinerary-content {
                 @apply mb-4;
 
                 .day-time {
@@ -65,7 +66,10 @@
                     .detail-item {
                         @apply mt-3;
                         display: flex;
-                        align-items: center;
+
+                        .duration {
+                            margin-right: .5rem;
+                        }
                     }
                 }
 
@@ -73,16 +77,27 @@
         }
 
         .budget-detail {
+            margin-top: .2rem;
 
             .budget-item {
                 display: flex;
                 justify-content: space-between;
-                padding: 1rem;
-
-                .thing {}
+                align-items: center;
+                padding: .7rem;
 
                 .cost {
                     color: #A4A4A4;
+                }
+            }
+
+            .budget-item-total {
+                font-weight: 600;
+                font-size: 1.2rem;
+                color: #000;
+                background-color: #F6F8FA;
+
+                .cost {
+                    color:#CA4C47
                 }
             }
         }
@@ -95,5 +110,6 @@
 }
 
 .icon {
-    margin-right: .5rem;
+    margin-right: .2rem;
+    margin-top: .1rem;
 }
