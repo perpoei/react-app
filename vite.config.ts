@@ -18,7 +18,7 @@ export default defineConfig({
     }
   },
   build: {
-    outDir: 'build',
+    outDir: 'dist',
     // 启用 CSS 代码分割
     cssCodeSplit: true,
     // 启用源码映射（生产环境关闭）
