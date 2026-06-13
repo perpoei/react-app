@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 import { useNavigate, Outlet, useLocation } from 'react-router-dom';
 import { Tabbar, TabbarItem } from 'react-vant';
 import { useSelector } from 'react-redux';
@@ -11,13 +11,28 @@ import classNames from 'classnames';
 export default function Layout() {
     const navigate = useNavigate();
     const { pathname } = useLocation();
-
-    /** 读取store的值 */
-    // const isShow = useSelector((state: RootState) => state.tabs.isShow)
     const isShow = NeedTabList.includes(pathname as TabPath);
+
+    /** Tab 配置列表 */
+    const tabs: TabConfig[] = [
+        { title: '首页', path: TabPath.首页, icon: <HomeO />, name: TabName.首页 },
+        { title: '对话', path: TabPath.对话, icon: <ChatO />, name: TabName.对话 },
+        { title: '我的', path: TabPath.我的, icon: <UserO />, name: TabName.我的 },
+    ];
 
     /** 是否调起键盘 */
     const isKeyboard = useSelector((state: RootState) => state.tabs.isKeyboard)
+
+    /** 展示tabbar */
+    const showTabbar = useMemo(() => {
+        return isShow || !isKeyboard;
+    }, [isShow, isKeyboard])
+
+    /** 不展示tabbar */
+    const hideTabbar = useMemo(() => {
+        return !isShow || isKeyboard;
+    }, [isShow, isKeyboard])
+
 
     /** 根据当前路径确定激活的Tab（使用 useMemo 缓存计算结果） */
     const activeTab: TabName = useMemo((): TabName => {
@@ -27,40 +42,34 @@ export default function Layout() {
         return TabName.首页;
     }, [pathname]);
 
-    /** Tab 配置列表 */
-    const tabs: TabConfig[] = [
-        { title: '首页', path: TabPath.首页, icon: <HomeO />, name: TabName.首页 },
-        { title: '对话', path: TabPath.对话, icon: <ChatO />, name: TabName.对话 },
-        { title: '我的', path: TabPath.我的, icon: <UserO />, name: TabName.我的 },
-    ];
-
     /**
      * 处理标签页切换的回调函数（使用 replace 模式）
      * @param value 当前选中的标签页名称
      */
-    const onChange: TabChangeHandler = (name: string | number): void => {
+    const onChange: TabChangeHandler = useCallback((name: string | number): void => {
         const tab = tabs.find((t: TabConfig) => t.name === name);
         if (tab) {
             navigate(tab.path, { replace: true });
         }
-    };
+    }, [tabs, navigate]);
 
     return (
         <div className='app-container'>
             {/** 内容区域 */}
-            <div className={classNames('app-content', {
-                'app-content-padding': isShow || !isKeyboard,
-                'app-content-no-padding': !isShow || isKeyboard
+            <div className={classNames(
+                'app-content', {
+                'app-content-padding': showTabbar,
+                'app-content-no-padding': hideTabbar
             })}>
                 <Outlet />
             </div>
 
-
             {
                 /* TabBar固定在底部 */
-                (isShow || !isKeyboard) && <div className={classNames('tabbar-container animate__animated', {
-                    'animate__fadeOutDownBig': !isShow || isKeyboard,
-                    'animate__fadeInUp': isShow || !isKeyboard
+                showTabbar && <div className={classNames(
+                    'tabbar-container animate__animated', {
+                    'animate__fadeOutDownBig': hideTabbar,
+                    'animate__fadeInUp': showTabbar
                 })}>
                     <Tabbar value={activeTab} onChange={onChange}>
                         {tabs.map((tab: TabConfig) => (

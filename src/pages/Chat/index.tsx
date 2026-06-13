@@ -56,7 +56,6 @@ export default function Chat() {
     useEffect(() => {
         const city = searchParams.get('city')
         const scene = searchParams.get('scene')
-        scene
         if (city && scene === TabPath.详情) {
             setInputMessage(`我想了解一下${city}的旅游景点~`)
         }
