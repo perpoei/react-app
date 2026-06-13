@@ -3,7 +3,7 @@ import { RouterProvider } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import router from '@/router'
 import store from '@/store/index.ts'
-import Loading from '@/components/common/loading/index.tsx'
+import Loading from '@/components/loading/index.tsx'
 
 function App() {
   return (

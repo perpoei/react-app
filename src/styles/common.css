@@ -19,6 +19,10 @@
     padding-bottom: calc(50px + env(safe-area-inset-bottom, 0px));
 }
 
+.app-content-no-padding {
+    padding-bottom: 0;
+}
+
 .app-content::-webkit-scrollbar {
     display: none;
 }

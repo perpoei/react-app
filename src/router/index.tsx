@@ -16,7 +16,7 @@ function createLazyRoute(routeConfig: any) {
     return {
         ...routeConfig,
         element: routeConfig.element || (
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<div>...</div>}>
                 <LazyComponent />
             </Suspense>
         )

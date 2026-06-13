@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+.page-container {
+
+    .page-content {
+
+        .quick-question {
+            @apply p-6;
+
+            .quick-title {
+                text-align: center;
+                margin-bottom: 1.5rem;
+                color: #A4A4A4
+            }
+
+            .quick-question-list {
+                @apply flex justify-center items-center flex-wrap;
+
+                .quick-tag {
+                    @apply mr-6 mb-4;
+                }
+            }
+
+        }
+
+        .message-list {
+            display: flex;
+            flex-direction: column;
+            padding: 1rem .5rem;
+            padding-bottom: calc(52.5px + env(safe-area-inset-bottom, 0px)); /** 输入框高度  **/
+        
+            .streaming-indicator {
+                @apply pl-1 mb-4;
+            }
+        }
+    }
+
+    .input-area {
+        @apply w-full;
+        position: absolute;
+    }
+
+    .isKeyboardOpen {
+        bottom: 0;
+    }
+
+    .isKeyboardClosed {
+        bottom: calc(50px + env(safe-area-inset-bottom, 0px));
+    }
+
+}

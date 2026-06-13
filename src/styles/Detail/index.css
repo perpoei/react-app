@@ -10,7 +10,7 @@
 
             .loading {
                 position: absolute;
-                top: 50% ;
+                top: 50%;
                 left: calc(50% - 62px);
             }
         }
@@ -85,6 +85,14 @@
                 align-items: center;
                 padding: .7rem;
 
+                .notes {
+                    display: block;
+                    color: #A4A4A4;
+                    margin-top: .5rem;
+                    line-height: 1.5rem;
+                    font-size: .8rem;
+                }
+
                 .cost {
                     color: #A4A4A4;
                 }
@@ -97,7 +105,7 @@
                 background-color: #F6F8FA;
 
                 .cost {
-                    color:#CA4C47
+                    color: #CA4C47
                 }
             }
         }

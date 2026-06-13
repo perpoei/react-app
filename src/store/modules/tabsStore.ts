@@ -3,12 +3,12 @@ import { createSlice } from '@reduxjs/toolkit';
 const tabSlice = createSlice({
     name: 'tabs',
     initialState: { 
-        /** 用于主页底部tab的显示 */
-        isShow: true
+        /** 键盘是否被调用 */
+        isKeyboard: false
     },
     reducers: {
         showTab: (state, action) => {
-            state.isShow = action.payload.isShow
+            state.isKeyboard = action.payload.isKeyboard
         }
     }
 })

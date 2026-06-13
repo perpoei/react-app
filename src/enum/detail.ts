@@ -30,5 +30,10 @@ export enum BudgetList {
     food = '餐饮',
     transportation = '交通',
     tickets = '门票',
-    other = '其他'
+    other = '其他',
+    notes = '备注'
+}
+
+export enum BudgetType {
+    备注 = 'notes',
 }

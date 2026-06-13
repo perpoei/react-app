@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 import { useNavigate, Outlet, useLocation } from 'react-router-dom';
 import { Tabbar, TabbarItem } from 'react-vant';
-// import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { HomeO, UserO, ChatO } from '@react-vant/icons';
 import type { TabConfig, TabChangeHandler } from '@/types/tab';
 import { TabName, TabPath, NeedTabList } from '@/enum/tabs';
-// import type { RootState } from '@/store/index'
+import type { RootState } from '@/store/index'
 import classNames from 'classnames';
 
 export default function Layout() {
@@ -15,6 +15,9 @@ export default function Layout() {
     /** 读取store的值 */
     // const isShow = useSelector((state: RootState) => state.tabs.isShow)
     const isShow = NeedTabList.includes(location.pathname as TabPath);
+
+    /** 是否调起键盘 */
+    const isKeyboard = useSelector((state: RootState) => state.tabs.isKeyboard)
 
     /** 根据当前路径确定激活的Tab（使用 useMemo 缓存计算结果） */
     const activeTab: TabName = useMemo((): TabName => {
@@ -46,15 +49,19 @@ export default function Layout() {
         <div className='app-container'>
             {/** 内容区域 */}
             <div className={classNames('app-content', {
-                'app-content-padding': isShow
+                'app-content-padding': isShow || !isKeyboard,
+                'app-content-no-padding': !isShow || isKeyboard
             })}>
                 <Outlet />
-                {/* TabBar固定在底部 */}
+                
             </div>
+
+
             {
-                isShow && <div className={classNames('tabbar-container animate__animated', {
-                    'animate__fadeOutDown': !isShow,
-                    'animate__fadeInUp': isShow
+                /* TabBar固定在底部 */
+                (isShow || !isKeyboard) && <div className={classNames('tabbar-container animate__animated', {
+                    'animate__fadeOutDownBig': !isShow || isKeyboard,
+                    'animate__fadeInUp': isShow || !isKeyboard
                 })}>
                     <Tabbar value={activeTab} onChange={onChange}>
                         {tabs.map((tab: TabConfig) => (

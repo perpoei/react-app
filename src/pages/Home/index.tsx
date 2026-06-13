@@ -30,8 +30,8 @@ export default function Chat() {
     })
 
     /** 解决tab被键盘顶起问题 */
-    const handleFocus = () =>  dispatch(showTab({isShow: false}))
-    const handleBlur = () =>  dispatch(showTab({isShow: true}))
+    const handleFocus = () =>  dispatch(showTab({isKeyboard: true}))
+    const handleBlur = () =>  dispatch(showTab({isKeyboard: false}))
 
     /** 组件挂载执行一次 */
     const hotCity = useMemo(() => {
