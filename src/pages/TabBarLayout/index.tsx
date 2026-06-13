@@ -10,22 +10,22 @@ import classNames from 'classnames';
 
 export default function Layout() {
     const navigate = useNavigate();
-    const location = useLocation();
+    const { pathname } = useLocation();
 
     /** 读取store的值 */
     // const isShow = useSelector((state: RootState) => state.tabs.isShow)
-    const isShow = NeedTabList.includes(location.pathname as TabPath);
+    const isShow = NeedTabList.includes(pathname as TabPath);
 
     /** 是否调起键盘 */
     const isKeyboard = useSelector((state: RootState) => state.tabs.isKeyboard)
 
     /** 根据当前路径确定激活的Tab（使用 useMemo 缓存计算结果） */
     const activeTab: TabName = useMemo((): TabName => {
-        if (location.pathname.includes(TabPath.首页)) return TabName.首页;
-        if (location.pathname.includes(TabPath.对话)) return TabName.对话;
-        if (location.pathname.includes(TabPath.我的)) return TabName.我的;
+        if (pathname.includes(TabPath.首页)) return TabName.首页;
+        if (pathname.includes(TabPath.对话)) return TabName.对话;
+        if (pathname.includes(TabPath.我的)) return TabName.我的;
         return TabName.首页;
-    }, [location.pathname]);
+    }, [pathname]);
 
     /** Tab 配置列表 */
     const tabs: TabConfig[] = [
@@ -53,7 +53,6 @@ export default function Layout() {
                 'app-content-no-padding': !isShow || isKeyboard
             })}>
                 <Outlet />
-                
             </div>
 
 

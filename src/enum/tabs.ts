@@ -17,3 +17,10 @@ export const NeedTabList = [
     TabPath.对话,
     TabPath.我的
 ]
+
+// 定义需要缓存的路由路径（只包含有对应组件的路径）
+export const CachedPath = [
+    TabPath.首页,    // /home
+    TabPath.对话,    // /chat
+    TabPath.详情,    // /detail
+];
