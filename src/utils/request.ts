@@ -67,14 +67,11 @@ export async function fetchStream(url: string, data: any, onChunk: (chunk: any) 
             if (!reader) break;
             const { done, value } = await reader?.read()
             if (done) break;
-            console.log('value', value)
 
             const chunk = decoder.decode(value, { stream: true })
             const lines = chunk.split('\n').filter(line => line.trim())
-            console.log(lines)
 
             for (const line of lines) {
-                console.log(line)
                 try {
                     /** 判断开头是否为流式输出的格式 */
                     if (line.startsWith('data: ')) {

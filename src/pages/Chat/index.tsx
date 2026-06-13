@@ -67,15 +67,16 @@ export default function Chat() {
         scrollToBottom()
     }, [messages])
 
-    const sendMessage = () => {
-        const msg = inputMessage.trim();
+    const sendMessage = (msg?: string) => {
+        // 优先使用传入的参数，否则使用 inputMessage 状态
+        const messageToSend = (msg ?? inputMessage).trim();
 
         /** 输入框无文字 or ai正在输出  **/
-        if (!msg || isStreaming) return
+        if (!messageToSend || isStreaming) return
 
-        addUserMessage(msg)
+        addUserMessage(messageToSend)
         setInputMessage(''); // 清空输入框
-        fetchResponse(msg); // 调用AI接口
+        fetchResponse(messageToSend); // 调用AI接口
     }
 
 
@@ -86,7 +87,6 @@ export default function Chat() {
      * @param chunk - 接收到的任意类型的数据块
      */
     const onChunk = (chunk: string) => {
-        console.log('chunk', chunk)
         fullResponse += chunk
         setMessages(prev => {
             const newMessages = [...prev];
@@ -182,7 +182,7 @@ export default function Chat() {
                                         size="large"
                                         key={index}
                                         className="quick-tag"
-                                        onClick={() => { }}
+                                        onClick={() => sendMessage(item)}
                                     >
                                         {item}
                                     </Tag>
@@ -201,7 +201,7 @@ export default function Chat() {
         type='primary'
         round
         disabled={!inputMessage.trim()}
-        onClick={sendMessage}
+        onClick={() => sendMessage()}
     >
         发送
     </Button>
