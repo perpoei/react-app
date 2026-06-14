@@ -16,7 +16,12 @@ export default function Chat() {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const chatContainerRef = useRef<HTMLDivElement>(null);
-    const [inputMessage, setInputMessage] = useState<string>('')
+
+    const city = searchParams.get('city');
+    const scene = searchParams.get('scene');
+    const [inputMessage, setInputMessage] = useState<string>(
+        city && scene === TabPath.详情 ? `我想了解一下${city}的旅游景点~` : ''
+    )
     /** 会话数据 */
     const [messages, setMessages] = useState<Messages[]>([])
 
@@ -52,15 +57,6 @@ export default function Chat() {
         }
     }
 
-
-    useEffect(() => {
-        const city = searchParams.get('city')
-        const scene = searchParams.get('scene')
-        if (city && scene === TabPath.详情) {
-            setInputMessage(`我想了解一下${city}的旅游景点~`)
-        }
-    }, [])
-
     useEffect(() => {
         // 消息变化后（DOM 更新完成）执行置底
         scrollToBottom()
@@ -79,14 +75,11 @@ export default function Chat() {
     }
 
 
-
-    let fullResponse: string = ''
     /**
      * 处理数据块的回调函数
      * @param chunk - 接收到的任意类型的数据块
      */
     const onChunk = (chunk: string) => {
-        fullResponse += chunk
         setMessages(prev => {
             const newMessages = [...prev];
             const lastIndex = newMessages.length - 1;
@@ -94,12 +87,12 @@ export default function Chat() {
             if (lastIndex >= 0 && newMessages[lastIndex].role === MessageType.AI) {
                 newMessages[lastIndex] = {
                     ...newMessages[lastIndex],
-                    content: fullResponse,
+                    content: newMessages[lastIndex].content + chunk,
                 }
             }
             return newMessages;
         })
-        scrollToBottom(); // 滚动到底部
+        scrollToBottom();
     }
 
     /**
@@ -107,7 +100,8 @@ export default function Chat() {
      * 当某个操作或流程结束时被调用
      */
     const onEnd = () => {
-        setIsStreaming(false); /** AI返回完成 */
+        setIsStreaming(false);
+        /** AI返回完成 */
         scrollToBottom(); // 滚动到底部
     }
 
@@ -128,7 +122,8 @@ export default function Chat() {
             }
             return newMessages;
         })
-        setIsStreaming(false) /** AI返回错误 */
+        setIsStreaming(false)
+        /** AI返回错误 */
         scrollToBottom(); // 滚动到底部
         // alert('AI发生错误，请重试')
     }
@@ -136,19 +131,16 @@ export default function Chat() {
     /** 获取AI响应 **/
     const fetchResponse = async (userMsg: string) => {
         setIsStreaming(true)
-        let aiMessageId = Date.now() + 1;
-
         setMessages(prev => [...prev, {
-            id: aiMessageId,
+            id: Date.now() + 1,
             role: MessageType.AI,
             content: '',
             timestamp: new Date().getTime()
         }])
 
 
-
         /** 调用流式接口 */
-        fetchStream('chat',
+        await fetchStream('chat',
             { message: userMsg },
             onChunk,
             onEnd,
@@ -207,7 +199,7 @@ export default function Chat() {
 
     return (
         <div className='page-container'>
-            <Sticky >
+            <Sticky>
                 <NavBar
                     title='AI旅游助手'
                     fixed
@@ -219,16 +211,11 @@ export default function Chat() {
             <div className="page-content" ref={chatContainerRef}>
                 {
                     messages.length === 0 ?
-                        <EmptyContent /> :
+                        EmptyContent() :
                         <div className="message-list">
                             {
-                                messages.map(v =>
-                                    <>
-                                        {
-                                            v.content?.trim() &&
-                                            <ChatBubble message={v} key={v.id} />
-                                        }
-                                    </>
+                                messages.map(v => v.content?.trim() &&
+                                    <ChatBubble message={v} key={v.id} />
                                 )
                             }
                             {
@@ -253,7 +240,7 @@ export default function Chat() {
                     onChange={setInputMessage}
                     onFocus={handleFocus}
                     onBlur={handleBlur}
-                    suffix={<SendBtn />}
+                    suffix={SendBtn()}
                 />
             </div>
         </div>
