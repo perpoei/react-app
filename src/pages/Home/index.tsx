@@ -1,4 +1,4 @@
-import { NoticeBar, NavBar, Form, Button, Picker, Input, hooks, Grid, Sticky } from 'react-vant';
+import { NoticeBar, NavBar, Form, Button, Input, hooks, Grid, Sticky } from 'react-vant';
 import { ChatO, InfoO, UserO } from '@react-vant/icons'
 import { useNavigate } from 'react-router-dom';
 import { useMemo, useState } from 'react'
@@ -8,13 +8,14 @@ import { showTab } from '@/store/modules/tabsStore'
 import { TabPath } from '@/enum/tabs';
 import { cityColumns } from '@/utils/cityList';
 import { formRules } from '@/utils/rules'
+import CityPicker from '@/components/cityPicker';
 import '@/styles/Home/index.css';
 
 export default function Chat() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [showPicker, setShowPicker] = useState<boolean>(false);
-        const [state, updateState] = hooks.useSetState({
+    const [state, updateState] = hooks.useSetState({
         city: '',
         budget: '0',
         days: '0'
@@ -22,16 +23,12 @@ export default function Chat() {
 
     const [form] = Form.useForm()
 
-    const cityMap = cityColumns.map(item => item.text)
-        .map(item => item.replace('市', ''))
-
-    const cityList = cityMap.filter((v, i) => {
-        if (i < 30) return v
-    })
-
     /** 解决tab被键盘顶起问题 */
-    const handleFocus = () =>  dispatch(showTab({isKeyboard: true}))
-    const handleBlur = () =>  dispatch(showTab({isKeyboard: false}))
+    const handleFocus = () => dispatch(showTab({ isKeyboard: true }))
+    const handleBlur = () => dispatch(showTab({ isKeyboard: false }))
+
+    const cityMap = useMemo(() => cityColumns.map(item => item.text)
+        .map(item => item.replace('市', '')), [])
 
     /** 组件挂载执行一次 */
     const hotCity = useMemo(() => {
@@ -41,16 +38,20 @@ export default function Chat() {
         })
     }, []) // 空依赖数组，只计算一次
 
-    /** 目的地选择 */
-    const pickerConfirm = (_: string) => {
-        updateState({city: _ ?? ''})
-        setShowPicker(false)
-    }
-
     /** 热门城市选择 */
     const handleCityTag = (cityName: string) => {
-        updateState({city: cityName})
-        form.setFieldValue('city', cityName)  // 同步更新表单字段值，触发校验
+        updateState({ city: cityName })
+        form.setFieldValue('city', cityName)  // 同步更新表单字段值
+        form.validateFields(['city'])  // 自动触发城市字段校验
+    }
+
+    /** 关闭picker */
+    const closePicker = () => setShowPicker(false);
+
+    const getCityValue = (cityName: string) => {
+        updateState({ city: cityName ?? '' })
+        form.setFieldValue('city', cityName)  // 同步更新表单字段值
+        form.validateFields(['city'])  // 自动触发城市字段校验
     }
 
     /** 页面跳转 */
@@ -66,7 +67,7 @@ export default function Chat() {
         navigate(path)
 
         /** 隐藏菜单 */
-        dispatch(showTab({isShow: false}))
+        dispatch(showTab({ isShow: false }))
     }
 
     const Footer = () => (
@@ -101,9 +102,9 @@ export default function Chat() {
                 <div className="card">
                     <h3>规划你的旅程</h3>
                     <div>
-                        <Form 
+                        <Form
                             form={form}
-                            onFinish={onFinish} 
+                            onFinish={onFinish}
                             footer={<Footer />}
                         >
                             <Form.Item
@@ -115,16 +116,13 @@ export default function Chat() {
                                 trigger='onConfirm'
                                 onClick={() => setShowPicker(true)}
                             >
-                                <Picker
-                                    popup
-                                    value={state.city}
-                                    visible={showPicker}
-                                    columns={cityList}
-                                    onConfirm={pickerConfirm}
-                                    onCancel={() => setShowPicker(false)}
-                                >
-                                    {() => state.city || '请选择城市'}
-                                </Picker>
+                                {state.city || '请选择城市'}
+                                <CityPicker
+                                    isShow={showPicker}
+                                    cityValue={state.city}
+                                    sendVal={getCityValue}
+                                    onClose={closePicker}
+                                />
                             </Form.Item>
                             <Form.Item
                                 className='form-item'
@@ -147,7 +145,7 @@ export default function Chat() {
                                 <Input
                                     type='number'
                                     onChange={days => updateState({ days })}
-                                    placeholder='请输入天数' 
+                                    placeholder='请输入天数'
                                     onBlur={handleBlur}
                                     onFocus={handleFocus}
                                 />

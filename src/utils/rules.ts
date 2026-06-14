@@ -8,8 +8,8 @@ export const formRules = {
         {
             validator: (_: Rule, value: string | undefined) => {
                 // 允许为空（required 会处理），若有值则必须 >= 0
-                if (value !== undefined && value !== '' && Number(value) <= 0) {
-                    return Promise.reject(new Error('预算金额不能低于或者等于0'));
+                if (value !== undefined && value !== '' && Number(value) <= 100) {
+                    return Promise.reject(new Error('预算金额不能低于100'));
                 }
                 return Promise.resolve();
             },
